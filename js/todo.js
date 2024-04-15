@@ -1,6 +1,8 @@
 import { renderCalendarView } from "./dashboard.js";
 import { days } from "./date_utils.js";
 import { loadTodoList, saveTodoList } from "./localStorage.js";
+import { renderRepeatToCalendarView } from "./dashboard.js";
+
 
 let dateNow = new Date();
 const todayYear = dateNow.getFullYear();
@@ -98,8 +100,10 @@ function handleDeleteButtonClick(event) {
 			const newTodoList = todoList.splice(liId, 1);
 			console.log('새 리스트: ' + newTodoList);
 			saveTodoList(newTodoList);
+			
 
 			listItem.parentNode.removeChild(listItem);
+			renderRepeatToCalendarView(newTodoList);
 		}
 		// 모든 할 일 목록을 삭제했는지 확인하고, none 추가.
 		//******************************이거 왜 안댐?********************/
