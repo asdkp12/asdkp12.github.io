@@ -13,6 +13,8 @@ if (loadTodoList().length === 0) {
 modalEvent();
 getheaderToday();
 const root = window.location.hostname === "127.0.0.1" ? "" : "/Calendar";
+console.log('root:', root);
+console.log('path:',window.location.pathname);
 if (window.location.pathname === root + "/" || window.location.pathname === root + "/index.html") dashboardEvent();
 if (window.location.pathname === root + "/html/calendar.html") calenderEvent();
 if (window.location.pathname === root + "/html/todo.html") {
