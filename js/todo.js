@@ -1,5 +1,6 @@
 import { renderCalendarView } from "./dashboard.js";
 import { days } from "./date_utils.js";
+import { loadTodoList, saveTodoList } from "./localStorage.js";
 
 let dateNow = new Date();
 const todayYear = dateNow.getFullYear();
@@ -90,6 +91,14 @@ function handleDeleteButtonClick(event) {
 	$checkboxes.forEach(function (checkbox) {
 		if (userConfirm) {
 			const listItem = checkbox.closest(".todoLi");
+			const liId = listItem.dataset.li;
+			console.log('할일 id: '+liId);
+			
+			let todoList = loadTodoList();
+			const newTodoList = todoList.splice(liId, 1);
+			console.log('새 리스트: ' + newTodoList);
+			saveTodoList(newTodoList);
+
 			listItem.parentNode.removeChild(listItem);
 		}
 		// 모든 할 일 목록을 삭제했는지 확인하고, none 추가.
@@ -235,6 +244,7 @@ function addTodoToList(obj) {
 	// 새로운 할 일 목록 요소 생성
 	const time = obj.date ? obj.date : `${obj.time.year}. ${obj.time.month}. ${obj.time.date} ${days[obj.time.day]}`;
 	const newTodoItem = document.createElement("li");
+	newTodoItem.setAttribute("data-li", obj.id);
 	newTodoItem.classList.add("todoLi");
 	newTodoItem.innerHTML = `
 			<label class="checkbox">
